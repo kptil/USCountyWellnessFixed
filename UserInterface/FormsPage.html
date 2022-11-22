@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forms</title>
+    <link rel = 'Stylesheet' href = 'Styles.css' type = text/css>
+    <style>
+        {
+            padding-inline: 50px;
+        }
+        div {
+            position: absolute;
+            text-align: center;
+            top : 250px;
+            left : 250px;
+        }
+    </style>
+</head>
+<body class = 'styleClass'>
+    <h2>Interactive Graphs Analyzing Neonatal Data</h2>
+    <!--<h3>Baseline State & County Statistics</h3>
+    <p>Request information on health, wealth, and population by county and state to support further analysis.
+    Options are restricted in the prototype version.</p>-->
+    <!-- This is query 2.
+    -->
+    <br>
+    <form class="forms" method="POST" action="GraphQuery.html" target="iframe">
+    <label>
+        <select id = 'att1' name = Attribute-1>
+            <option value = ''> Attribute 1</option> <!-- Rename metric -->
+            <option value = 'A'> Select A</option>   <!-- One option for Unemployment Rate -->
+            <option value = 'B'> Select B</option>
+            <option value = 'C'> Select C</option>
+            <option value = 'D'> Select D</option>
+        </select>
+        <select id = 'att2' name = Attribute-2>
+            <option value = ''> Attribute 2</option> <!-- Rename State -->
+            <option value = 'A'> Select A</option> <!-- An option for each state we include -->
+            <option value = 'B'> Select B</option>
+            <option value = 'C'> Select C</option>
+            <option value = 'D'> Select D</option>
+        </select>
+        <label>From</label>
+        <label for="fYear"></label>
+            <select name="fyear" id="fYear" size = 2>
+
+             <script>
+            function dropDown(){
+                document.getElementById("fYear").innerHTML += ("<option>Year</option>");
+                for (let y = 1983; y < 2016; y++) {
+                    document.getElementById("fYear").innerHTML += ("<option value =" + y + ">" + y + "</option>");
+                }
+            }
+
+            dropDown();
+
+             </script>
+             </select>
+
+
+        <label>To</label>
+        <label for="tYear"></label>
+            <select name="tyear" id="tYear" size = 2>
+
+             <script>
+            function dropDown(){
+                document.getElementById("tYear").innerHTML += ("<option>Year</option>");
+                for (let y = 1983; y < 2016; y++) {
+                    document.getElementById("tYear").innerHTML += ("<option value =" + y + ">" + y + "</option>");
+                }
+            }
+
+            dropDown();
+
+            </script>
+             </select>
+    </label> <br> <br>
+
+      <input type = Submit value = 'Submit' id = "btn">
+
+      <a href = HomePage.html><input type = button value = 'Home'></a>
+
+
+    </form>
+
+    <div class="embed-container">
+        <iframe name="iframe" width="500" height="300" >
+            <img src="GraphQuery.html"  alt=""/>
+        </iframe>
+    </div>
+
+    <!--
+    <h3>Tobacco Use Among Pregnant Women</h3>
+    <p>This is query 1. A user needs to be able to type a for percent of population</p>
+
+    <h3>Annual Fetal Death Rate by Race</h3>
+    <p>This is query 3. A user needs to be able to choose from a drop down menu with options for the different
+    races we have included in our data.</p>
+
+    <h3>Quality of Prenatal Care as Impacted by Demographics</h3>
+    <p>This is query 4. A user needs to be able to type in a percentage for minority percent of population</p>
+
+    <h3>Successful High Risk Pregnancies</h3>
+    <p>This is query 5. A user needs to be able to choose from a drop down menu 'State' with choices for the
+    different states we're using.</p>
+
+    -->
+
+</body>
+</html>
