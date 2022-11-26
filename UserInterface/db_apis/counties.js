@@ -9,10 +9,18 @@ async function find(context) {
 
     if (context.FIPS) {
         binds.FIPS = context.FIPS;
-        query += ' WHERE FIPS = :FIPS'
+        query += `\nWHERE FIPS = :FIPS`;
     }
+
+    if (context.STATE) {
+      binds.STATE = context.STATE;
+      query += ` AND STATE = :STATE`
+    }
+
+    console.log(query);
+
     //console.log(query);
-    const result = await db.simpleExecute(baseQuery, binds);
+    const result = await db.simpleExecute(query, binds);
     //console.log(result);
     return result.rows;
 }

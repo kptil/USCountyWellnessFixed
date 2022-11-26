@@ -4,12 +4,13 @@ const counties = require('../controllers/counties.js');
 const mother = require('../controllers/mother.js');
 const query2 = require('../controllers/query2.js');
 
-router.route('/counties/').
+router.route('/counties/:FIPS?/:STATE?').
     get(counties.get);
 
 router.route('/mother/').
     get(mother.get);
 
-router.route('/query2/').get(query2.get);
+router.route('/query2/:state?/:fromTime?/:toTime?').
+    get(query2.get);
 
 module.exports = router;
