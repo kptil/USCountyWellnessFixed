@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph 2</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        let state = localStorage.getItem("stateQ2");
+        let fYear = localStorage.getItem("fromYearQ2");
+        let tYear = localStorage.getItem("toYearQ2");
+        localStorage.clear();
+        let result;
+
+        // Use state, fYear, tYear as input variables for the SQL query
+
+        // result = Execute SQL query and store here
+
+        // Dummy result to be replaced with actual query results
+        result = [{stateR: "Florida", year: 2000, rate: 0.303},
+            {stateR: "Florida", year: 2001, rate: 0.353},
+            {stateR: "Florida", year: 2002, rate: 0.372},
+            {stateR: "Florida", year: 2003, rate: 0.305},
+            {stateR: "Florida", year: 2004, rate: 0.346},
+            {stateR: "Florida", year: 2005, rate: 0.319}];
+
+    </script>
+</head>
+<body>
+
+    <canvas id="mychart"  height=200px width=500px></canvas>
+
+    <script>
+
+        let y = [];
+        let x = [];
+        for (let i = 0; i < result.length; i++) {
+            x.push(result[i].year);
+            y.push(result[i].rate);
+
+        }
+
+        const setting = {
+            type: "line",
+            data: {
+                labels: x,
+                datasets: [{
+
+                    label: 'Annual Average Unemployment Rate for '  + result[0].stateR,
+                    data: y,
+                    borderColor: "green",
+                    borderBackground: 'green',
+                }]
+            },
+            options: {
+                legend: {display: true}
+
+            }
+        };
+
+        new Chart(
+            document.getElementById('mychart'),
+            setting
+        );
+
+    </script>
+    <br/>
+    <p>Back to the home page:
+        <a href = IntQuery.html><input type = button value = 'Return'></a></p>
+</body>
+</html>
