@@ -118,8 +118,42 @@
             else {
                 url = url + '/' + toYear.toString();
             }
+
+            fetch(url).then(res => res.json()).then(output => {
+                let years = [];
+                let rates = [];
+                output.forEach(row => {
+                    const year = row.COUNTY_EM_YEAR; // Note: These must be in all caps
+                    const rate = row.RATE;
+                    years.push(year);
+                    rates.push(rate);
+                })
+
+                const setting = {
+                    type: "line",
+                    data: {
+                        labels: years,
+                        datasets: [{
+
+                            label: 'Annual Average Unemployment Rate for All States',
+                            data: rates,
+                            borderColor: "green",
+                            borderBackground: 'green',
+                        }]
+                    },
+                    options: {
+                        legend: {display: true}
+
+                    }
+                };
+
+                new Chart(
+                    document.getElementById('mychart'),
+                    setting
+                );
+            })
         }
-        else if (state.toString() === "Florida") {
+        else {
             url = url + '/' + state.toString();
             if (fromYear.toString() === "Year") {
                 url = url + '/2000';
@@ -134,52 +168,51 @@
             else {
                 url = url + '/' + toYear.toString();
             }
-        }
 
-        fetch(url).then(res => res.json()).then(output => {
-            //test code - to be deleted let stringData = [];
-            let stringState;
-            let years = [];
-            let rates = [];
-            output.forEach(row => {
-                const state = row.STATE_NAME;
-                const year = row.COUNTY_EM_YEAR; // Note: These must be in all caps
-                const rate = row.RATE;
-                let string = state.toString() + year.toString() + rate.toString();
-                //test code - to be deleted stringData.push(string);
-                stringState = state.toString();
-                years.push(year);
-                rates.push(rate);
+            fetch(url).then(res => res.json()).then(output => {
+                //test code - to be deleted let stringData = [];
+                let stringState;
+                let years = [];
+                let rates = [];
+                output.forEach(row => {
+                    const state = row.STATE_NAME;
+                    const year = row.COUNTY_EM_YEAR; // Note: These must be in all caps
+                    const rate = row.RATE;
+                    let string = state.toString() + year.toString() + rate.toString();
+                    //test code - to be deleted stringData.push(string);
+                    stringState = state.toString();
+                    years.push(year);
+                    rates.push(rate);
+                })
+
+                const setting = {
+                    type: "line",
+                    data: {
+                        labels: years,
+                        datasets: [{
+
+                            label: 'Annual Average Unemployment Rate for '  + stringState,
+                            data: rates,
+                            borderColor: "green",
+                            borderBackground: 'green',
+                        }]
+                    },
+                    options: {
+                        legend: {display: true}
+
+                    }
+                };
+
+                new Chart(
+                    document.getElementById('mychart'),
+                    setting
+                );
+
+                // this is a test so you can see the data printed to the screen, will be deleted
+                //document.getElementById("test").innerHTML = stringData.toString();
+                //document.getElementById("test").innerHTML = years.toString();
             })
-
-            const setting = {
-                type: "line",
-                data: {
-                    labels: years,
-                    datasets: [{
-
-                        label: 'Annual Average Unemployment Rate for '  + stringState,
-                        data: rates,
-                        borderColor: "green",
-                        borderBackground: 'green',
-                    }]
-                },
-                options: {
-                    legend: {display: true}
-
-                }
-            };
-
-            new Chart(
-                document.getElementById('mychart'),
-                setting
-            );
-
-            // this is a test so you can see the data printed to the screen, will be deleted
-            //document.getElementById("test").innerHTML = stringData.toString();
-            //document.getElementById("test").innerHTML = years.toString();
-        })
-
+        }
     })
 
 

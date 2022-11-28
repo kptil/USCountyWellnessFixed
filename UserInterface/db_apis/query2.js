@@ -31,14 +31,6 @@ async function find(context) {
     }
     query += `) natural join ${tb.tables.countyHasEmploymentTest})\n`
 
-    if (context.state){
-      binds.state = `Florida`;
-      if (context.state == `Florida`) {
-        query += `\nwhere state_name = :state`;
-      } else {
-        query += `\nwhere state_name != :state`
-      }
-    }
     query += `\n  group by state_name, county_em_year)`;
 
     if (context.fromTime && context.toTime) {
