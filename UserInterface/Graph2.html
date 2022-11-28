@@ -12,17 +12,33 @@
         localStorage.clear();
         let result;
 
+        const db = require('../services/database.js');
+        const tb = require('../table.js');
+
+        let query = `SELECT state_name, county_em_year, num / denom as rate
+                    from (
+                        select state_name, county_em_year, sum(labor_force) as denom, sum(unemployed) as num
+                        from (
+                            (select coid, state_name from ${tb.tables.countyTest} where state_name = 'Florida')
+                            natural join ${tb.tables.countyHasEmploymentTest}
+                        )
+                    group by state_name, county_em_year
+                    )
+                    where (county_em_year >= 2000 and county_em_year <= 2005)`;
+
+        result = db.simpleExecute(query);
+
         // Use state, fYear, tYear as input variables for the SQL query
 
         // result = Execute SQL query and store here
 
         // Dummy result to be replaced with actual query results
-        result = [{stateR: "Florida", year: 2000, rate: 0.303},
+        /*result = [{stateR: "Florida", year: 2000, rate: 0.303},
             {stateR: "Florida", year: 2001, rate: 0.353},
             {stateR: "Florida", year: 2002, rate: 0.372},
             {stateR: "Florida", year: 2003, rate: 0.305},
             {stateR: "Florida", year: 2004, rate: 0.346},
-            {stateR: "Florida", year: 2005, rate: 0.319}];
+            {stateR: "Florida", year: 2005, rate: 0.319}];*/
 
     </script>
 </head>
