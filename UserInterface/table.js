@@ -7,23 +7,28 @@ const table = (tableName) => {
 const _population = 'JWILLIAMS16.POPULATION';
 const _mother = 'WEISSB.MOTHER';
 const _hasRisk = 'WEISSB.MOTHERHASRISKFACTOR';
-const _motherRisk = 'WEISSB.MOTHER RISK';
+const _motherRisk = 'WEISSB.MOTHERRISKS';
+const _birth = 'WEISSB.BIRTH';
+const _birthComp = 'WEISSB.BIRTH_COMPLICATION';
+const _hasBirthComp = 'WEISSB.HAS_BIRTH_COMPLICATION';
+const _receivesPNC = 'WEISSB.RECEIVES_PRENATAL_CARE';
+const _child = 'WEISSB.CHILD';
 // created test tables to avoid key constraints on actual tables when entering dummy data
 const _countyTest = 'KTILEY.COUNTYTEST';
 const _countyHasEmploymentTest = 'KTILEY.COUNTYHASEMPLOYMENTTEST'
 
-// TODO:
-// DONE Adjust query 2 to incorporate at least state
-// Copy db_apis\counties.js to run query 2
-// Get results to show up under graph on Query 2 page
-
 
 module.exports = {
     tables : {
-        population : _population,
         mother : _mother,
         hasRisk : _hasRisk,
         motherRisk : _motherRisk,
+        birth : _birth,
+        birthComp : _birthComp,
+        hasBirthComp : _hasBirthComp,
+        receivesPNC : _receivesPNC,
+        child : _child,
+        population : _population,
         countyTest : _countyTest,
         countyHasEmploymentTest : _countyHasEmploymentTest
     }
