@@ -3,7 +3,7 @@ const router = new express.Router();
 const counties = require('../controllers/counties.js');
 const mother = require('../controllers/mother.js');
 const query2State = require('../controllers/query2.js');
-const query2All = require('../controllers/query2All');
+const query2All = require('../controllers/query2All.js');
 
 router.route('/counties/:FIPS?/:STATE?').
     get(counties.get);
