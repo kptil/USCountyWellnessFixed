@@ -21,8 +21,7 @@
 <h3>Baseline State & County Statistics</h3><br><br>
 <form id="forms" >
     <label>
-        <label for='unemployment'>Input Unemployment Rate </label>
-        <input type = Number min="0" max="100" id = 'unemployment'> <br><br><br>
+
         <label for='state'>Select State </label>
         <select id = 'state' name = "State">
             <option value = 'Florida'> Florida</option>
@@ -73,18 +72,23 @@
     const qform = document.getElementById("forms");
     qform.addEventListener("submit", (e) => {
         e.preventDefault();
-        let unemployment = document.getElementById('unemployment').value;
+
         let state = document.querySelector('#state').value;
         let fromYear = document.querySelector('#fYear').value;
         let toYear = document.querySelector('#tYear').value;
 
-        console.log(unemployment + state + fromYear + toYear);
+      localStorage.setItem("stateQ2", state);
+      localStorage.setItem("fromYearQ2", fromYear);
+      localStorage.setItem("toYearQ2", toYear);
 
     })
 </script>
 <br>
+
+
 <u1></u1>
 <script>
+  /*
     const url = 'http://localhost:3000/api/query2';
     let data;
     fetch(url).then(res => { return res.json(); }).then(output => {
@@ -98,8 +102,11 @@
     }).catch(err => {
         console.log(err);
     });
+
+   */
 </script>
 <br>
+<a href = Graph2.html><input type = button value = 'View Graph'></a>
 <a href = IntQuery.html><input type = button value = 'Home'></a>
 
 </body>
