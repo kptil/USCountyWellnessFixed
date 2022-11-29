@@ -103,8 +103,7 @@
         let url = 'http://localhost:3000/api/query2';
 
         if (state.toString() === "All") {
-            // can we create a route for http://localhost:3000/api/query2/fromYear/toYear so that we can pull
-            // all states and still filter by years?
+            url = url + 'All';
             if (fromYear.toString() === "Year") {
                 url = url + '/2000';
             }
