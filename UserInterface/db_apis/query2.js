@@ -22,7 +22,7 @@ async function find(context) {
     //binds.from = `where (county_em_year >= 2000 and county_em_year <= 2005)`;
     console.log(context);
     if (context.state){
-      binds.state = `Florida`;
+      binds.state = context.state;
       if (context.state == `Florida`) {
         query += `\nwhere state_name = :state`;
       } else {

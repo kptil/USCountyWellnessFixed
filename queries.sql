@@ -1,4 +1,5 @@
--- Query 1: For each year, find average number of cigarettes smoked by mothers in counties where income is less than y
+-- Query 1: For each year, find average number of cigarettes smoked by mothers in counties where
+-- income is less than y
 -- and less than xx% of the population has a Bachelors degree or higher.
 -- DONE - BIRTH METRICS. I think this query should be in a separate chart by itself with some explanatory text on
 -- why it is relevant/interesting. When discussing with him, he didn't like it until he realized by 'mother' I

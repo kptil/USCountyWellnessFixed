@@ -13,6 +13,10 @@ const _birthComp = 'WEISSB.BIRTH_COMPLICATION';
 const _hasBirthComp = 'WEISSB.HAS_BIRTH_COMPLICATION';
 const _receivesPNC = 'WEISSB.RECEIVES_PRENATAL_CARE';
 const _child = 'WEISSB.CHILD';
+const _county = 'WEISSB.COUNTY';
+const _countyHasEduLevel = 'WEISSB.COUNTYHASEDULEVEL';
+const _countyHasPop = 'WEISSB.COUNTYHASPOP';
+
 // created test tables to avoid key constraints on actual tables when entering dummy data
 const _countyTest = 'KTILEY.COUNTYTEST';
 const _countyHasEmploymentTest = 'KTILEY.COUNTYHASEMPLOYMENTTEST'
@@ -30,6 +34,9 @@ module.exports = {
         child : _child,
         population : _population,
         countyTest : _countyTest,
-        countyHasEmploymentTest : _countyHasEmploymentTest
+        countyHasEmploymentTest : _countyHasEmploymentTest,
+        county : _county,
+        countyHasEduLevel : _countyHasEduLevel,
+        countyHasPop : _countyHasPop
     }
 }
