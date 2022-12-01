@@ -44,14 +44,14 @@ async function find(context) {
                     using (mID)`;
 
     if (context.fromTime && context.toTime) {
-        query += `where (county_em_year >= :fromTime and county_em_year <= :toTime)`;
+        query += `where (year >= :fromTime and year <= :toTime)`;
         binds.fromTime = context.fromTime;
         binds.toTime = context.toTime;
     } else if (context.fromTime) {
-        query += `where (county_em_year >= :fromTime)`;
+        query += `where (year >= :fromTime)`;
         binds.fromTime = context.fromTime;
     } else if (context.toTime) {
-        query += `where (county_em_year <= :toTime)`;
+        query += `where (year <= :toTime)`;
         binds.toTime = context.toTime;
     }
 
