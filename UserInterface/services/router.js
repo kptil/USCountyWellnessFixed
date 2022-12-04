@@ -8,6 +8,7 @@ const query1 = require('../controllers/query1.js');
 const query3 = require('../controllers/query3.js');
 const query4 = require('../controllers/query4.js');
 const query5 = require('../controllers/query5.js');
+const query6 = require('../controllers/query6.js');
 
 router.route('/counties/:FIPS?/:STATE?').
     get(counties.get);
@@ -28,5 +29,7 @@ router.route('/query3/:race?/:fromTime?/:toTime?').get(query3.get);
 router.route('/query4/:percent?/:fromTime?/:toTime?').get(query4.get);
 
 router.route('/query5/:state?/:fromTime?/:toTime?').get(query5.get);
+
+router.route('/query6').get(query6.get);
 
 module.exports = router;

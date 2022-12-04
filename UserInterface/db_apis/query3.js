@@ -6,9 +6,9 @@ async function find(context) {
     let query = `select DOB_Y, fetalDeaths / totalBirths as fetalDeathRate
 from (
     (select DOB_Y, count(bID) as totalBirths
-    from (select bID, DOB_Y from Birth where bID in (select bID from Child))
+    from (select bID, DOB_Y from ${tb.tables.birth} where bID in (select bID from ${tb.tables.child}))
          natural join
-         (select mID from Mother where race = `;
+         (select mID from ${tb.tables.mother} where race = `;
 
     binds.race = context.race;
     query += `:race)
@@ -17,9 +17,9 @@ from (
     query += `group by DOB_Y)
 natural join
     (select DOB_Y, count(bID) as fetalDeaths
-    from (select bID, DOB_Y from Birth where bID not in (select bID from Child))
+    from (select bID, DOB_Y from ${tb.tables.birth} where bID not in (select bID from ${tb.tables.child}))
          natural join
-         (select mID from Mother where race = :race)
+         (select mID from ${tb.tables.mother} where race = :race)
     group by DOB_Y)
 )
 `;

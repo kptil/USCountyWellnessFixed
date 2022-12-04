@@ -5,14 +5,14 @@ async function find(context) {
     const binds = {};
     let query = `with statepops(race_pop_year, state_name, pop) as (
     select county_pop_year, state_name, sum(county_total)
-    from CountyHasPop natural join US_State
+    from ${tb.tables.countyHasPop} natural join ${tb.tables.us_State}
     group by county_pop_year, state_name
 )
 select DOB_Y, count(bID) as numBirths
 from (
-        select bID, DOB_Y from (Birth natural join (select coID, state_name from County))
+        select bID, DOB_Y from (${tb.tables.birth} natural join (select coID, state_name from ${tb.tables.county}))
         where state_name in (   select state_name
-                                from statepops join StateHasPopByRace
+                                from statepops join ${tb.tables.stateHasPopByRace}
                                 using (state_name, race_pop_year)
                                 where (DOB_Y = race_pop_year) and (race_count / pop > `;
 
@@ -27,7 +27,7 @@ from (
     query += `and (race != 'white' or hispanic = true)
                             )
       )
-      natural join Receives_Prenatal_Care
+      natural join ${tb.tables.receivesPNC}
 where (care_adequacy = 'adequate') and `;
 
     if (context.fromTime && context.toTime) {
