@@ -15,6 +15,7 @@
             left : 250px;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class = 'styleClass'>
 <h2>Query 4</h2> <br>
@@ -64,7 +65,7 @@
     <input type = Submit value = 'Submit' id = "btn">
 
 </form>
-
+<canvas id="mychart"  height=200px width=500px></canvas>
 <script>
     const qform = document.getElementById("forms");
     qform.addEventListener("submit", (e) => {
@@ -73,13 +74,70 @@
         let fromYear = document.querySelector('#fYear').value;
         let toYear = document.querySelector('#tYear').value;
 
-        console.log(percent + fromYear + toYear);
+        //console.log(percent + fromYear + toYear);
+
+        let url = 'http://localhost:3000/api/query4';
+
+        if (percent === "") {
+            url += '/.5';
+        } else {
+            url = url + '/' + percent.toString();
+        }
+
+        if (fromYear.toString() === "Year") {
+            url = url + '/2000';
+        }
+        else {
+            url = url + '/' + fromYear.toString();
+        }
+
+        if (toYear.toString() === "Year") {
+            url = url + '/2005';
+        }
+        else {
+            url = url + '/' + toYear.toString();
+        }
+
+        fetch(url).then(res => res.json()).then(output => {
+            let years = [];
+            let counts = [];
+            output.forEach(row => {
+                const year = row.DOB_Y;
+                const count = row.NUMBIRTHS;
+                years.push(year);
+                counts.push(count);
+            })
+
+            const setting = {
+                type: "line",
+                data: {
+                    labels: years,
+                    datasets: [{
+
+                        label: 'Number of Births Receiving Adequate Prenatal Care',
+                        data: counts,
+                        borderColor: "black",
+                        borderBackground: 'white',
+                    }]
+                },
+                options: {
+                    legend: {display: true}
+
+                }
+            };
+
+            new Chart(
+                document.getElementById('mychart'),
+                setting
+            );
+        })
 
     })
 
 
 </script>
 <br>
+<a href = Query4.html><input type = button value = 'Reload'></a>
 <a href = IntQuery.html><input type = button value = 'Home'></a>
 
 </body>

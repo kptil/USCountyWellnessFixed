@@ -81,7 +81,7 @@ from (
         where state_name in (   select state_name
                                 from statepops join StateHasPopByRace
                                 using (state_name, race_pop_year)
-                                where DOB_Y = race_pop_year and (race_count / pop > .5)
+                                where (DOB_Y = race_pop_year) and (race_count / pop > .5) and (race != 'white' or hispanic = true)
                             )
       )
       natural join Receives_Prenatal_Care
