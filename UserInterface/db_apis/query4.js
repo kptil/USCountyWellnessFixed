@@ -24,7 +24,7 @@ from (
         query += `.5) `;
     }
 
-    query += `and (race != 'white' or hispanic = true)
+    query += `and (race != 'white' or hispanic = false)
                             )
       )
       natural join ${tb.tables.receivesPNC}
