@@ -17,7 +17,7 @@ async function find(context) {
                         from (
                             select state_name, county_em_year, sum(labor_force) as denom, sum(unemployed) as num
                             from (
-                                (select coid, state_name from ${tb.tables.countyTest}`;
+                                (select coid, state_name from ${tb.tables.county}`;
     const binds = {};
     //binds.from = `where (county_em_year >= 2000 and county_em_year <= 2005)`;
     console.log(context);
@@ -29,7 +29,7 @@ async function find(context) {
         query += `\nwhere state_name != :state`
       }
     }
-    query += `) natural join ${tb.tables.countyHasEmploymentTest})\n`
+    query += `) natural join ${tb.tables.countyHasEmp})\n`
 
     query += `\n  group by state_name, county_em_year)`;
 

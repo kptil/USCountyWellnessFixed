@@ -15,6 +15,7 @@ const _child = 'WEISSB.CHILD';
 const _county = 'KTILEY.COUNTY';
 const _countyHasEduLevel = 'KTILEY.COUNTYHASEDULEVEL';
 const _countyHasPop = 'KTILEY.COUNTYHASPOP';
+const _countyHasEmp = 'KTILEY.COUNTYHASEMPLOYMENT';
 const _US_State = 'KTILEY.US_STATE';
 const _stateHasPopByRace = 'WEISSB.STATEHASPOPBYRACE';
 
@@ -40,6 +41,7 @@ module.exports = {
         county : _county,
         countyHasEduLevel : _countyHasEduLevel,
         countyHasPop : _countyHasPop,
+        countyHasEmp : _countyHasEmp,
         us_State : _US_State,
         stateHasPopByRace : _stateHasPopByRace
     }

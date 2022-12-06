@@ -17,12 +17,12 @@ async function find(context) {
                         from (
                             select county_em_year, sum(labor_force) as denom, sum(unemployed) as num
                             from (
-                                (select coid, state_name from ${tb.tables.countyTest}`;
+                                (select coid, state_name from ${tb.tables.county}`;
     const binds = {};
 
     console.log(context);
 
-    query += `) natural join ${tb.tables.countyHasEmploymentTest})\n`
+    query += `) natural join ${tb.tables.countyHasEmp})\n`
 
     query += `\n  group by county_em_year)`;
 
