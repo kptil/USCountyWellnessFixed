@@ -4,7 +4,6 @@ const table = (tableName) => {
     return cred.connection.user +'.'+ tableName;
 };
 
-const _population = 'JWILLIAMS16.POPULATION';
 const _mother = 'WEISSB.MOTHER';
 const _hasRisk = 'WEISSB.MOTHERHASRISKFACTOR';
 const _motherRisk = 'WEISSB.MOTHERRISKS';
@@ -13,15 +12,16 @@ const _birthComp = 'WEISSB.BIRTH_COMPLICATION';
 const _hasBirthComp = 'WEISSB.HAS_BIRTH_COMPLICATION';
 const _receivesPNC = 'WEISSB.RECEIVES_PRENATAL_CARE';
 const _child = 'WEISSB.CHILD';
-const _county = 'WEISSB.COUNTY';
-const _countyHasEduLevel = 'WEISSB.COUNTYHASEDULEVEL';
-const _countyHasPop = 'WEISSB.COUNTYHASPOP';
-const _US_State = 'WEISSB.US_STATE';
+const _county = 'KTILEY.COUNTY';
+const _countyHasEduLevel = 'KTILEY.COUNTYHASEDULEVEL';
+const _countyHasPop = 'KTILEY.COUNTYHASPOP';
+const _US_State = 'KTILEY.US_STATE';
 const _stateHasPopByRace = 'WEISSB.STATEHASPOPBYRACE';
 
 // created test tables to avoid key constraints on actual tables when entering dummy data
 const _countyTest = 'KTILEY.COUNTYTEST';
 const _countyHasEmploymentTest = 'KTILEY.COUNTYHASEMPLOYMENTTEST'
+const _population = 'JWILLIAMS16.POPULATION';
 
 
 module.exports = {
