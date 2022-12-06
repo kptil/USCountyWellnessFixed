@@ -12,7 +12,7 @@ with ValidCounties(coID, year) as (
         (select coID from County where avgHHLDIncome2000 < 20000)
         natural join
         (select County_ED_Year as year, coID, County_ED_Total from CountyHasEduLevel
-        where Ed_Level = 'Bachelors+')
+        where Ed_Level = 'Bachelors')
         join
         (select County_Pop_Year as year, coID, County_Total from CountyHasPop)
         using (year, coID)
@@ -81,7 +81,7 @@ from (
         where state_name in (   select state_name
                                 from statepops join StateHasPopByRace
                                 using (state_name, race_pop_year)
-                                where (DOB_Y = race_pop_year) and (race_count / pop > .5) and (race != 'white' or hispanic = false)
+                                where (DOB_Y = race_pop_year) and (race_count / pop > .5) and (race != 'white' or hispanic = 1)
                             )
       )
       natural join Receives_Prenatal_Care
