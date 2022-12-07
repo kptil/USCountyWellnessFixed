@@ -20,7 +20,7 @@ from (
         binds.percent = context.percent;
         query += `:percent) `;
     } else {
-        binds.percent = .5;
+        //binds.percent = .5;
         query += `.5) `;
     }
 
@@ -28,17 +28,17 @@ from (
                             )
       )
       natural join ${tb.tables.receivesPNC}
-where (care_adequacy = 'adequate') and `;
+where (care_adequacy = 'Adequate') `;
 
     if (context.fromTime && context.toTime) {
-        query += `(DOB_Y >= :fromTime and DOB_Y <= :toTime)`;
+        query += `and (DOB_Y >= :fromTime and DOB_Y <= :toTime)`;
         binds.fromTime = context.fromTime;
         binds.toTime = context.toTime;
     } else if (context.fromTime) {
-        query += `(DOB_Y >= :fromTime)`;
+        query += `and (DOB_Y >= :fromTime)`;
         binds.fromTime = context.fromTime;
     } else if (context.toTime) {
-        query += `(DOB_Y <= :toTime)`;
+        query += `and (DOB_Y <= :toTime)`;
         binds.toTime = context.toTime;
     }
 

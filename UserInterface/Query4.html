@@ -23,7 +23,7 @@
 <form id="forms" >
     <label>
         <label for='percent'>Input Percentage </label>
-        <input type = Number min="0" max="100" id = 'percent'> <br><br><br>
+        <input type = Float min="0" max="100" id = 'percent'> <br><br><br>
 
 
         <label>From</label>
@@ -81,7 +81,7 @@
         if (percent === "") {
             url += '/.5';
         } else {
-            url = url + '/' + percent.toString();
+            url = url + '/' + (percent/100).toString();
         }
 
         if (fromYear.toString() === "Year") {
