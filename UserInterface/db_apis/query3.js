@@ -6,7 +6,7 @@ async function find(context) {
     let query = `select DOB_Y, fetalDeaths / totalBirths as fetalDeathRate
 from (
     (select DOB_Y, count(bID) as totalBirths
-    from (select bID, DOB_Y, mID from ${tb.tables.birth} where bID in (select bID from ${tb.tables.child}))
+    from (select bID, DOB_Y, mID from ${tb.tables.birth})
          natural join
          (select mID from ${tb.tables.mother} where race = `;
 
