@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,7 +17,8 @@
             return res.json();
         }).then(output => {
             output.forEach(county => {
-                const cName = county.AREA_NAME;
+              county.AREA_NAME = undefined;
+              const cName = county.AREA_NAME;
                 data = `<li>${cName}</li>`;
                 document.querySelector('u1').insertAdjacentHTML('beforeend', data);
             });
