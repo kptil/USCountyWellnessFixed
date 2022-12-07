@@ -20,11 +20,11 @@ ValidMothers
 natural join
 (select coID from ${tb.tables.county} `;
 
-    binds.state = context.state;
     if (context.state === 'All') {
         query += `)
         `;
     } else {
+        binds.state = context.state;
         query += `where state_name = :state)
         `;
     }
