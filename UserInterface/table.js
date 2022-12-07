@@ -18,11 +18,14 @@ const _countyHasPop = 'KTILEY.COUNTYHASPOP';
 const _countyHasEmp = 'KTILEY.COUNTYHASEMPLOYMENT';
 const _US_State = 'KTILEY.US_STATE';
 const _stateHasPopByRace = 'WEISSB.STATEHASPOPBYRACE';
+const _keyMotherRisks = 'KTILEY.KEYMOTHERRISKS';
 
 // created test tables to avoid key constraints on actual tables when entering dummy data
 const _countyTest = 'KTILEY.COUNTYTEST';
 const _countyHasEmploymentTest = 'KTILEY.COUNTYHASEMPLOYMENTTEST'
 const _population = 'JWILLIAMS16.POPULATION';
+const _birthQ5Test = 'KTILEY.BIRTHQ5TEST';
+const _hasRiskQ5Test = 'KTILEY.MOTHERRISKSQ5TEST';
 
 
 module.exports = {
@@ -43,6 +46,9 @@ module.exports = {
         countyHasPop : _countyHasPop,
         countyHasEmp : _countyHasEmp,
         us_State : _US_State,
-        stateHasPopByRace : _stateHasPopByRace
+        stateHasPopByRace : _stateHasPopByRace,
+        birthQ5Test : _birthQ5Test,
+        hasRiskQ5Test : _hasRiskQ5Test,
+        keyMotherRisks : _keyMotherRisks
     }
 }

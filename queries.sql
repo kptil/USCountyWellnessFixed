@@ -92,34 +92,46 @@ group by DOB_Y;
 -- BIRTH METRICS
 -- Question is good, just needs implemented
 
-with motherRiskState(year, mID, risk_factor) as (
-    select DOB_Y, mID, risk_factor
-    from (
-            (select DOB_Y, mID
-            from Mother natural join Birth natural join County
-            where state_name = 'Florida')
-            natural join
-            MotherHasRiskFactor
-         )
-)
-select year, count(mID) as numMothers
-from (
-    ( select * from motherRiskState )
+with ValidMothers(mID) as (
+    select mID from WEISSB.motherhasriskfactor where risk_factor in (select risk_factor from KeyMotherRisks)
     minus
-    (
-        select year, mID, risk_factor
-        from (
-                (select * from (select year, mID from motherRiskState),
-                               (select risk_factor from MotherHasRiskFactor))
-                minus
-                (select * from motherRiskState)
-             )
+    select mID from (
+    select mID, risk_factor from (select mID from WEISSB.motherhasriskfactor where risk_factor in (select risk_factor from KeyMotherRisks)), KeyMotherRisks
+    minus
+    select mID, risk_factor from WEISSB.motherhasriskfactor where risk_factor in (select risk_factor from KeyMotherRisks)
     )
-    )
-where year >= 2000 and year <= 2005
+)
+select year, count(distinct mID) as numMothers
+from (
+(select DOB_Y as year, bID, mID, coID from WEISSB.Birth)
+natural join
+ValidMothers
+natural join
+(select coID from County where state_name = 'Florida')
+)
+where bID in (select bID from WEISSB.Child) and  year >= 2000 and year <= 2005
 group by year;
 
-
+-- Test version of Query 5
+with ValidMothers(mID) as (
+    select mID from WEISSB.motherhasriskfactor where mID in (select mID from BirthQ5Test)
+    minus
+    select mID from (
+    select mID, risk_factor from (select mID from WEISSB.motherhasriskfactor where mID in (select mID from BirthQ5Test)), MotherRisksQ5Test
+    minus
+    select mID, risk_factor from WEISSB.motherhasriskfactor where mID in (select mID from BirthQ5Test)
+    )
+)
+select year, count(distinct mID) as numMothers
+from (
+(select DOB_Y as year, mID, coID from BirthQ5Test)
+natural join
+ValidMothers
+natural join
+(select coID from County where state_name = 'Florida')
+)
+where year >= 2000 and year <= 2005
+group by year;
 
 -- !!!! OLD QUERIES - DO NOT USE !!!!! --
 -- OLD Query 2: For each year, how many states did not have any counties with unemployement rate less than x (15% default)?
@@ -167,3 +179,31 @@ natural join
                                                         where Percent_Uninsured > 20))
     group by DOB_Y)
 );
+
+-- old query 5
+with motherRiskState(year, mID, risk_factor) as (
+    select DOB_Y, mID, risk_factor
+    from (
+            (select DOB_Y, mID
+            from Mother natural join Birth natural join County
+            where state_name = 'Florida')
+            natural join
+            MotherHasRiskFactor
+         )
+)
+select year, count(mID) as numMothers
+from (
+    ( select * from motherRiskState )
+    minus
+    (
+        select year, mID, risk_factor
+        from (
+                (select * from (select year, mID from motherRiskState),
+                               (select risk_factor from MotherHasRiskFactor))
+                minus
+                (select * from motherRiskState)
+             )
+    )
+    )
+where year >= 2000 and year <= 2005
+group by year;
