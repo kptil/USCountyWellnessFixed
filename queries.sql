@@ -55,19 +55,26 @@ order by county_em_year;
 select DOB_Y, fetalDeaths / totalBirths as fetalDeathRate
 from (
     (select DOB_Y, count(bID) as totalBirths
-    from (select bID, DOB_Y from Birth where bID in (select bID from Child))
+    from (select bID, DOB_Y, mID from Birth where bID in (select bID from Child))
          natural join
          (select mID from Mother where race = 'white')
     group by DOB_Y)
 natural join
     (select DOB_Y, count(bID) as fetalDeaths
-    from (select bID, DOB_Y from Birth where bID not in (select bID from Child))
+    from (select bID, DOB_Y, mID from Birth where bID not in (select bID from Child))
          natural join
          (select mID from Mother where race = 'white')
     group by DOB_Y)
 )
 where (DOB_Y >= 2000 and DOB_Y <= 2005)
 order by DOB_Y;
+
+-- No fetal deaths for years 2002 and 2004 for any race
+select DOB_Y, race, count(bID) from (
+(select DOB_Y, bID, mID from WEISSB.Birth where bID not in (select bID from WEISSB.Child))
+natural join
+(select mID, race from WEISSB.Mother))
+group by DOB_Y, race;
 
 
 -- Query 4: For each year, how many births received adequate prenatal care in states where minorities made up

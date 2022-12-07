@@ -20,6 +20,7 @@
 <body class = 'styleClass'>
 <h2>Query 3</h2> <br>
 <h3>Annual Fetal Death Rate by Race</h3><br>
+<p>How has the annual fetal death rate changed year by year for children of a given race?</p><br>
 <form id="forms" >
     <label>
         <label for='race'>Select Race </label>
@@ -43,7 +44,7 @@
             <script>
                 function dropDown(){
                     document.getElementById("fYear").innerHTML += ("<option>Year</option>");
-                    for (let y = 2000; y <= 2005; y++) {
+                    for (let y = 2000; y <= 2004; y++) {
                         document.getElementById("fYear").innerHTML += ("<option value =" + y + ">" + y + "</option>");
                     }
                 }
@@ -61,7 +62,7 @@
             <script>
                 function dropDown(){
                     document.getElementById("tYear").innerHTML += ("<option>Year</option>");
-                    for (let y = 2000; y <= 2005; y++) {
+                    for (let y = 2000; y <= 2004; y++) {
                         document.getElementById("tYear").innerHTML += ("<option value =" + y + ">" + y + "</option>");
                     }
                 }
