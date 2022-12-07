@@ -20,6 +20,21 @@
 <body class = 'styleClass'>
 <h2>Query 6</h2> <br>
 <h3>Total Number of Tuples in the Database</h3><br>
+<p id="tuples"></p>
+<script>
+
+    let url = 'http://localhost:3000/api/query6';
+
+    fetch(url).then(res => res.json()).then(output => {
+        let sum = 0;
+        output.forEach(row => {
+            sum = row.SUM;
+        })
+
+        document.getElementById("tuples").innerHTML = sum.toString();
+    })
+
+</script>
 <br>
 <a href = IntQuery.html><input type = button value = 'Home'></a>
 
