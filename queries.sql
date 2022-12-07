@@ -74,19 +74,24 @@ with statepops(race_pop_year, state_name, pop) as (
     select county_pop_year, state_name, sum(county_total)
     from CountyHasPop natural join US_State
     group by county_pop_year, state_name
+),
+stateminoritypops(race_pop_year, state_name, min_pop) as (
+    select race_pop_year, state_name, sum(race_count)
+    from WEISSB.statehaspopbyrace
+    where race != 'white' or hispanic = 1
+    group by race_pop_year, state_name
 )
 select DOB_Y, count(bID) as numBirths
-from (
-        select bID, DOB_Y from (Birth natural join (select coID, state_name from County))
-        where state_name in (   select state_name
-                                from statepops join StateHasPopByRace
-                                using (state_name, race_pop_year)
-                                where (DOB_Y = race_pop_year) and (race_count / pop > .5) and (race != 'white' or hispanic = 1)
-                            )
-      )
-      natural join Receives_Prenatal_Care
-where (care_adequacy = 'adequate') and (DOB_Y >= 2000 and DOB_Y <= 2005)
-group by DOB_Y;
+from WEISSB.birth natural join (select coID, state_name from County) natural join WEISSB.Receives_Prenatal_Care
+where state_name in (
+    select state_name
+    from statepops join stateminoritypops using (race_pop_year, state_name)
+    where min_pop / pop > .02
+) and (care_adequacy = 'Adequate') and (DOB_Y >= 2000 and DOB_Y <= 2005)
+group by DOB_Y
+order by DOB_Y;
+
+
 
 -- Query 5: For every year, how many mothers had every risk factor and still had successful pregnancies in state?
 -- BIRTH METRICS
@@ -207,3 +212,22 @@ from (
     )
 where year >= 2000 and year <= 2005
 group by year;
+
+-- old query 4
+with statepops(race_pop_year, state_name, pop) as (
+    select county_pop_year, state_name, sum(county_total)
+    from CountyHasPop natural join US_State
+    group by county_pop_year, state_name
+)
+select DOB_Y, count(bID) as numBirths
+from (
+        select bID, DOB_Y from (Birth natural join (select coID, state_name from County))
+        where state_name in (   select state_name
+                                from statepops join StateHasPopByRace
+                                using (state_name, race_pop_year)
+                                where (DOB_Y = race_pop_year) and (race_count / pop > .5) and (race != 'white' or hispanic = 1)
+                            )
+      )
+      natural join Receives_Prenatal_Care
+where (care_adequacy = 'adequate') and (DOB_Y >= 2000 and DOB_Y <= 2005)
+group by DOB_Y;
