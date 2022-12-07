@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Query 2</title>
+  <link rel = 'Stylesheet' href = 'Styles.css' type = text/css>
+  <style>
+    {
+      padding-inline: 50px;
+    }
+    div {
+      position: absolute;
+      text-align: center;
+      top : 250px;
+      left : 250px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class = 'styleClass'>
+<h2>Query 2</h2> <br>
+<h3>Baseline State & County Statistics</h3><br><br>
+<form id="forms" >
+  <label>
+
+    <label for='state'>Select State </label>
+    <select id = 'state' name = "State">
+      <option value = 'Florida'> Florida</option>
+      <option value = 'All'> All</option>
+    </select> <br><br><br>
+
+    <label>From</label>
+    <label for="fYear"></label>
+    <select name="fyear" id="fYear" >
+
+      <script>
+        function dropDown(){
+          document.getElementById("fYear").innerHTML += ("<option>Year</option>");
+          for (let y = 2000; y <= 2005; y++) {
+            document.getElementById("fYear").innerHTML += ("<option value =" + y + ">" + y + "</option>");
+          }
+        }
+
+        dropDown();
+
+      </script>
+    </select>
+
+
+    <label>To</label>
+    <label for="tYear"></label>
+    <select name="tyear" id="tYear" >
+
+      <script>
+        function dropDown(){
+          document.getElementById("tYear").innerHTML += ("<option>Year</option>");
+          for (let y = 2000; y <= 2005; y++) {
+            document.getElementById("tYear").innerHTML += ("<option value =" + y + ">" + y + "</option>");
+          }
+        }
+
+        dropDown();
+
+      </script>
+    </select>
+  </label> <br> <br>
+  <br>
+  <input type = Submit value = 'Submit' id = "btn">
+
+</form>
+
+<!-- <script>
+    const qform = document.getElementById("forms");
+    qform.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let state = document.querySelector('#state').value;
+        let fromYear = document.querySelector('#fYear').value;
+        let toYear = document.querySelector('#tYear').value;
+      localStorage.setItem("stateQ2", state);
+      localStorage.setItem("fromYearQ2", fromYear);
+      localStorage.setItem("toYearQ2", toYear);
+    })
+</script> -->
+<br>
+
+
+<p id="test"></p>
+<canvas id="mychart"  height=200px width=500px></canvas>
+<script>
+  const qform = document.getElementById("forms");
+
+  qform.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    let state = document.querySelector('#state').value;
+    let fromYear = document.querySelector('#fYear').value;
+    let toYear = document.querySelector('#tYear').value;
+
+    let url = 'http://localhost:3000/api/query2';
+
+    if (state.toString() === "All") {
+      // can we create a route for http://localhost:3000/api/query2/fromYear/toYear so that we can pull
+      // all states and still filter by years?
+      if (fromYear.toString() === "Year") {
+        url = url + '/2000';
+      }
+      else {
+        url = url + '/' + fromYear.toString();
+      }
+
+      if (toYear.toString() === "Year") {
+        url = url + '/2005';
+      }
+      else {
+        url = url + '/' + toYear.toString();
+      }
+
+      fetch(url).then(res => res.json()).then(output => {
+        let years = [];
+        let rates = [];
+        output.forEach(row => {
+          const year = row.COUNTY_EM_YEAR; // Note: These must be in all caps
+          const rate = row.RATE;
+          years.push(year);
+          rates.push(rate);
+        })
+
+        const setting = {
+          type: "line",
+          data: {
+            labels: years,
+            datasets: [{
+
+              label: 'Annual Average Unemployment Rate for All States',
+              data: rates,
+              borderColor: "green",
+              borderBackground: 'green',
+            }]
+          },
+          options: {
+            legend: {display: true}
+
+          }
+        };
+
+        new Chart(
+          document.getElementById('mychart'),
+          setting
+        );
+      })
+    }
+    else {
+      url = url + '/' + state.toString();
+      if (fromYear.toString() === "Year") {
+        url = url + '/2000';
+      }
+      else {
+        url = url + '/' + fromYear.toString();
+      }
+
+      if (toYear.toString() === "Year") {
+        url = url + '/2005';
+      }
+      else {
+        url = url + '/' + toYear.toString();
+      }
+
+      fetch(url).then(res => res.json()).then(output => {
+        //test code - to be deleted let stringData = [];
+        let stringState;
+        let years = [];
+        let rates = [];
+        output.forEach(row => {
+          const state = row.STATE_NAME;
+          const year = row.COUNTY_EM_YEAR; // Note: These must be in all caps
+          const rate = row.RATE;
+          let string = state.toString() + year.toString() + rate.toString();
+          //test code - to be deleted stringData.push(string);
+          stringState = state.toString();
+          years.push(year);
+          rates.push(rate);
+        })
+
+        const setting = {
+          type: "line",
+          data: {
+            labels: years,
+            datasets: [{
+
+              label: 'Annual Average Unemployment Rate for '  + stringState,
+              data: rates,
+              borderColor: "green",
+              borderBackground: 'green',
+            }]
+          },
+          options: {
+            legend: {display: true}
+
+          }
+        };
+
+        new Chart(
+          document.getElementById('mychart'),
+          setting
+        );
+
+        // this is a test so you can see the data printed to the screen, will be deleted
+        //document.getElementById("test").innerHTML = stringData.toString();
+        //document.getElementById("test").innerHTML = years.toString();
+      })
+    }
+  })
+
+
+  /* OLD FETCH, TO BE DELETED
+    const url = 'http://localhost:3000/api/query2';
+    let data;
+    fetch(url).then(res => { return res.json(); }).then(output => {
+        output.forEach(row => {
+            const state = row.STATE_NAME;
+            const year = row.COUNTY_EM_YEAR; // Note: These must be in all caps
+            const rate = row.RATE;
+            data = `<li>${state}, ${year}, ${rate}</li>`;
+            document.querySelector('u1').insertAdjacentHTML('beforeend', data);
+        });
+    }).catch(err => {
+        console.log(err);
+    });
+   */
+</script>
+<br>
+
+<a href = Query2.html><input type = button value = 'Reload'></a>
+<!--<a href = Graph2.html><input type = button value = 'View Graph'></a>
+<a href = IntQuery.html><input type = button value = 'Home'></a> -->
+
+</body>
+</html>
