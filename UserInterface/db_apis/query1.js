@@ -11,8 +11,7 @@ async function find(context) {
         binds.income = context.income;
         query += `:income)`;
     } else {
-        //binds.income = 40000;
-        query += `40000)`;
+        query += `50000)`;
     }
 
     query += ` natural join
@@ -30,7 +29,7 @@ async function find(context) {
         `;
     } else {
         //binds.income = 20;
-        query += `20`
+        query += `30`
     }
 
     query += `)
