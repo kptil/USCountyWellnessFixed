@@ -11,13 +11,13 @@ async function find(context) {
         binds.income = context.income;
         query += `:income)`;
     } else {
-        binds.income = 40000;
+        //binds.income = 40000;
         query += `40000)`;
     }
 
     query += ` natural join
               (select County_ED_Year as year, coID, County_ED_Total from ${tb.tables.countyHasEduLevel}
-                where Ed_Level = 'Bachelors+')
+                where Ed_Level = 'Bachelors')
                 join
                 (select County_Pop_Year as year, coID, County_Total from ${tb.tables.countyHasPop})
                 using (year, coID)
@@ -29,19 +29,19 @@ async function find(context) {
         query += `:percentage
         `;
     } else {
-        binds.income = 20;
-        query += `20)`
+        //binds.income = 20;
+        query += `20`
     }
 
     query += `)
-                select year, avg(Cigarettes_Smoked) as avgCigarettes from
+                select year, avg(Cigarettes_per_day) as avgCigarettes from
                     (ValidCounties
                     join
-                    (select bID, DOB_Y as year, mID, coID from Birth)
+                    (select bID, DOB_Y as year, mID, coID from ${tb.tables.birth})
                     using (coID, year))
                     join
-                    (select mID, cigarettes_smoked from Mother)
-                    using (mID)`;
+                    (select mID, cigarettes_per_day from ${tb.tables.mother})
+                    using (mID) `;
 
     if (context.fromTime && context.toTime) {
         query += `where (year >= :fromTime and year <= :toTime)`;
@@ -56,7 +56,7 @@ async function find(context) {
     }
 
     query += `group by year`;
-
+    console.log(query);
     const result = await db.simpleExecute(query, binds);
     return result.rows;
 }
