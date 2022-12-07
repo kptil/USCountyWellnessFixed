@@ -6,7 +6,7 @@ async function find(context) {
     let query = `select DOB_Y, fetalDeaths / totalBirths as fetalDeathRate
 from (
     (select DOB_Y, count(bID) as totalBirths
-    from (select bID, DOB_Y from ${tb.tables.birth} where bID in (select bID from ${tb.tables.child}))
+    from (select bID, DOB_Y, mID from ${tb.tables.birth} where bID in (select bID from ${tb.tables.child}))
          natural join
          (select mID from ${tb.tables.mother} where race = `;
 
@@ -17,7 +17,7 @@ from (
     query += `group by DOB_Y)
 natural join
     (select DOB_Y, count(bID) as fetalDeaths
-    from (select bID, DOB_Y from ${tb.tables.birth} where bID not in (select bID from ${tb.tables.child}))
+    from (select bID, DOB_Y, mID from ${tb.tables.birth} where bID not in (select bID from ${tb.tables.child}))
          natural join
          (select mID from ${tb.tables.mother} where race = :race)
     group by DOB_Y)
@@ -35,7 +35,7 @@ natural join
         query += `where (DOB_Y <= :toTime)`;
         binds.toTime = context.toTime;
     }
-
+    console.log(query);
     const result = await db.simpleExecute(query, binds);
     return result.rows;
 }

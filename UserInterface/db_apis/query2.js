@@ -45,7 +45,7 @@ async function find(context) {
       binds.toTime = context.toTime;
     }
 
-    console.log(query);
+    //console.log(query);
     const result = await db.simpleExecute(query, binds);
     //console.log(result);
     return result.rows;
