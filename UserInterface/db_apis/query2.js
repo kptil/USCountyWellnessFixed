@@ -45,6 +45,9 @@ async function find(context) {
       binds.toTime = context.toTime;
     }
 
+    query += `
+    order by county_em_year`;
+
     //console.log(query);
     const result = await db.simpleExecute(query, binds);
     //console.log(result);

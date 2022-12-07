@@ -55,7 +55,10 @@ async function find(context) {
         binds.toTime = context.toTime;
     }
 
-    query += `group by year`;
+    query += `
+    group by year
+    order by year`;
+
     console.log(query);
     const result = await db.simpleExecute(query, binds);
     return result.rows;

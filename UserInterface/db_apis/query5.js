@@ -45,7 +45,8 @@ natural join
     }
 
     query += `
-    group by year`;
+    group by year
+    order by year`;
 
     /*
     let query = `with motherRiskState(year, mID, risk_factor) as (

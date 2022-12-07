@@ -35,7 +35,11 @@ natural join
         query += `where (DOB_Y <= :toTime)`;
         binds.toTime = context.toTime;
     }
-    console.log(query);
+    //console.log(query);
+
+    query += `
+    order by DOB_Y`;
+
     const result = await db.simpleExecute(query, binds);
     return result.rows;
 }

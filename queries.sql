@@ -28,7 +28,8 @@ select year, avg(Cigarettes_Smoked) as avgCigarettes from
     (select mID, cigarettes_smoked from Mother)
     using (mID)
 where (year >= 2000 and year <= 2005)
-group by year;
+group by year
+order by year;
 
 
 -- Query 2: For each year, what was the unemployment rate for each state?
@@ -46,7 +47,8 @@ from (
         group by state_name, county_em_year
         where state_name = 'Florida'
     )
-where (county_em_year >= 2000 and county_em_year <= 2005);
+where (county_em_year >= 2000 and county_em_year <= 2005)
+order by county_em_year;
 
 -- Query 3: How has the annual fetal death rate changed year by year for children of a given race?
 
@@ -64,7 +66,8 @@ natural join
          (select mID from Mother where race = 'white')
     group by DOB_Y)
 )
-where (DOB_Y >= 2000 and DOB_Y <= 2005);
+where (DOB_Y >= 2000 and DOB_Y <= 2005)
+order by DOB_Y;
 
 
 -- Query 4: For each year, how many births received adequate prenatal care in states where minorities made up
@@ -115,7 +118,8 @@ natural join
 (select coID from County where state_name = 'Florida')
 )
 where bID in (select bID from WEISSB.Child) and  year >= 2000 and year <= 2005
-group by year;
+group by year
+order by year;
 
 -- Test version of Query 5
 with ValidMothers(mID) as (
