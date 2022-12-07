@@ -19,8 +19,11 @@
 </head>
 <body class = 'styleClass'>
 <h2>Query 4</h2> <br>
-<h3>Quality of Prenatal Care as Impacted by Demographics</h3><br><br>
+<h3>Quality of Prenatal Care as Impacted by Demographics</h3><br>
+<p>For each year, how many births received adequate prenatal care in states where minorities
+    made up at least xx% of the population? Minority in this case is defined as not white.</p><br>
 <form id="forms" >
+
     <label>
         <label for='percent'>Input Percentage </label>
         <input type = Float min="0" max="100" id = 'percent'> <br><br><br>
@@ -33,7 +36,7 @@
             <script>
                 function dropDown(){
                     document.getElementById("fYear").innerHTML += ("<option>Year</option>");
-                    for (let y = 2000; y <= 2005; y++) {
+                    for (let y = 2000; y <= 2004; y++) {
                         document.getElementById("fYear").innerHTML += ("<option value =" + y + ">" + y + "</option>");
                     }
                 }
@@ -51,7 +54,7 @@
             <script>
                 function dropDown(){
                     document.getElementById("tYear").innerHTML += ("<option>Year</option>");
-                    for (let y = 2000; y <= 2005; y++) {
+                    for (let y = 2000; y <= 2004; y++) {
                         document.getElementById("tYear").innerHTML += ("<option value =" + y + ">" + y + "</option>");
                     }
                 }
